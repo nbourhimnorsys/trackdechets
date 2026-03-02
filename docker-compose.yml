@@ -46,6 +46,25 @@ services:
       - minio:/data/minio
     command: minio server /data/minio --console-address ":8900"
 
+  minio-init:
+    image: minio/mc
+    depends_on:
+      - minio
+    restart: "no"
+    entrypoint: >
+      /bin/sh -c "
+      until mc alias set td http://minio:9000 trackdechets password; do echo 'waiting for minio...'; sleep 2; done;
+      mc mb -p td/td-storage;
+      mc mb -p td/td-bsds-templates;
+      mc mb -p td/registry-errors-integration;
+      mc mb -p td/registry-imports-integration;
+      mc mb -p td/registry-exports-integration;
+      mc mb -p td/registry-models-integration;
+      mc mb -p td/registry-exhaustive-exports-integration;
+      mc mb -p td/texs-analysis-integration;
+      echo '✅ MinIO buckets created';
+      "
+
   nginx:
     image: nginx:1.19.6
     restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
