@@ -214,7 +214,12 @@ export function BsdasriPdf({ bsdasri, qrCode, associatedBsdasris }: Props) {
             />{" "}
             Estimée
             <br />
-            "QUANTITÉ ESTIMÉE CONFORMÉMENT AU 5.4.1.1.3.2" de l'ADR
+            {bsdasri?.emitter?.emission?.weight?.isEstimate?(
+                <>
+                 "QUANTITÉ ESTIMÉE CONFORMÉMENT AU 5.4.1.1.3.2" de l'ADR
+                </>
+            ):""}
+            
           </div>
         </div>
         {/* End PRED */}
@@ -341,7 +346,7 @@ export function BsdasriPdf({ bsdasri, qrCode, associatedBsdasris }: Props) {
               }
               readOnly
             />{" "}
-            réelle <span> - </span>
+            Réelle <span> - </span>
             <input
               type="checkbox"
               checked={
@@ -351,7 +356,11 @@ export function BsdasriPdf({ bsdasri, qrCode, associatedBsdasris }: Props) {
             />{" "}
             Estimée
             <br />
-            "QUANTITÉ ESTIMÉE CONFORMÉMENT AU 5.4.1.1.3.2" de l'ADR
+            {bsdasri?.emitter?.emission?.weight?.isEstimate?(
+                <>
+                 "QUANTITÉ ESTIMÉE CONFORMÉMENT AU 5.4.1.1.3.2" de l'ADR
+                </>
+            ):""}
           </div>
         </div>
         {/* End Transporter */}
